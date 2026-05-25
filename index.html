@@ -850,7 +850,33 @@
 
   <!-- Scripts -->
   <script src="script.js"></script>
-  <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script> 
+  <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
+  <!-- Booking Form -->
+<div id="booking-section" style="padding:40px; text-align:center; background:#f9f9f9;">
+  <h2>Book a Table</h2>
+  <input type="text" id="name" placeholder="Your Name" style="padding:10px; margin:5px; width:200px;"><br>
+  <input type="date" id="date" placeholder="Date" style="padding:10px; margin:5px; width:200px;"><br>
+  <input type="number" id="guests" placeholder="Number of Guests" style="padding:10px; margin:5px; width:200px;"><br>
+  <button onclick="bookTable()" style="padding:10px 30px; background:#333; color:#fff; border:none; cursor:pointer; margin-top:10px;">Book Now</button>
+  <p id="booking-response"></p>
+</div>
+
+<script>
+async function bookTable() {
+  const name = document.getElementById('name').value;
+  const date = document.getElementById('date').value;
+  const guests = document.getElementById('guests').value;
+
+  const response = await fetch('https://isotovz2pd.execute-api.us-east-1.amazonaws.com/booking', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, date, guests })
+  });
+
+  const data = await response.json();
+  document.getElementById('booking-response').innerText = data.message;
+}
+</script>
 </body>
 </html>
 
